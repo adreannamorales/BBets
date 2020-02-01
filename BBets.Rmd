@@ -1,36 +1,63 @@
 ---
-title: "Brownlow's Bets"
-author: "Put your name here!"
-date: "put the date here"
-output: html_document: default
- ---
+title: "BBets Project"
+author: "Adreanna Morales"
+date: "1/31/2020"
+output: html_document
+---
 
-<!-- We recommend you use git branches -- create a separate branch for each major section i.e. Introduction, Methods, Results, Inferential Results, and Discussion and Conclusions - leave the YAML block untouched until the final merge where you put in your own name !-->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # Introduction
 
-<!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?!-->
+How much money is won/lost on a bet that at east two people have the same b'day in a class of 35. Instructor wagers 2:1 
 
- At the first day of class there are 35 students in Math Statistics class and professor Brownlow always proposes this bet to his students "I will wager $2 to your bet of $1 that at least two people in today's class have the same birthday.  Brownlow has made this bet 21 times, so far. Where do you think his profits are? Discuss this in a markdown document
+Instructor has done this 15 times, 
+1. what is his expected win/lose amount 
 
-# Methods
+2. how much would the instructor have to wager tomake the bet fair
 
-<!--Decide on your methods:  In this section explain the approach you will take to attack the issue --- how will you decide on a likely estimate of professor Brownlow's earnings or losses after 21 bets. Also explain how you construct a 95% confidence interval about your estimate of his winnings !-->
+3. how many students would have to be in the class or a 2:1 bet to be fair?
+    
+```{r}
+days = 1:365
 
+saveArray= vector ('numeric')
+for (k in 1:1000){
+    bank =0
+    for(i in 1:525){
+      sampleClass = sample(days, 35, replace =TRUE)
 
-# Profit Estimate
+    repeats = length(unique(sampleClass))
+    if (repeats ==35) bank = bank - 10
+    else bank = bank + 1
+  }
+saveArray [k]= bank
+}
 
-<!--Explain and display the results of your method of coming up with the estimate of professor Brownlows net position after betting !-->
+```
+    histogram of bank amounts.
+```{r}
+hist(saveArray)
+```
 
+Answer questions #1
+```{r}
+print ('average amt:')
+print (mean(saveArray))
+```
 
-# Confidence interval of Brownlows earning
+```{r cars}
+summary(cars)
+```
 
-<!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlow's net financial position !-->
+## Including Plots
 
+You can also embed plots, for example:
 
-# Discussion and Conclusion
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
 
-<!--Discussion and conclusion here.  If professor Brownlow is consistantly making or losing money how could he change his payout so that his profits center on zero?  Also discuss what size his class should be in order to have his current scheme balance at zero profit.
-
-Would you take this bet?  What about if there were only 12 people in the class?   !-->
-
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
